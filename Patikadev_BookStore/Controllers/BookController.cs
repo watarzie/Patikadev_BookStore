@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Patikadev_BookStore.BookOperations.CreateBook;
+using Patikadev_BookStore.BookOperations.DeleteBook;
 using Patikadev_BookStore.BookOperations.GetBooks;
 using Patikadev_BookStore.BookOperations.GetById;
 using Patikadev_BookStore.BookOperations.UpdateBook;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Patikadev_BookStore.BookOperations.CreateBook.CreateBookCommand;
-using static Patikadev_BookStore.BookOperations.UpdateBook.UpdateBookBody;
+using static Patikadev_BookStore.BookOperations.UpdateBook.UpdateBookCommand;
 
 namespace Patikadev_BookStore.Controllers
 {
@@ -60,8 +61,19 @@ namespace Patikadev_BookStore.Controllers
         [HttpGet("{id}")]//From Route
         public IActionResult GetById(int id)
         {
-            GetBookRoute route = new GetBookRoute(_context);
-            var result = route.Handle(id);
+            BookViewIdModel result;
+            try
+            {
+                GetBookRoute route = new GetBookRoute(_context);
+                route.BookId = id;
+                result=route.Handle();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+            
             return Ok(result);
 
         }
@@ -87,12 +99,13 @@ namespace Patikadev_BookStore.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
         {
-            UpdateBookBody command = new UpdateBookBody(_context);
+           
             try
             {
-                
+                UpdateBookCommand command = new UpdateBookCommand(_context);
+                command.BookId = id;
                 command.Model = updatedBook;
-                command.Handle(id);
+                command.Handle();
             }
             catch (Exception ex)
             {
@@ -105,14 +118,20 @@ namespace Patikadev_BookStore.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == id);
-            if(book is null)
+            try
             {
-                return BadRequest();
+                DeleteBookCommand command = new DeleteBookCommand(_context);
+                command.BookId = id;
+                command.Handle();
             }
-            _context.Books.Remove(book);
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+         
             return Ok();
+          
         }
 
     }
