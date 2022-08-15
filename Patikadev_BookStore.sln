@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patikadev_BookStore", "Patikadev_BookStore\Patikadev_BookStore.csproj", "{A5C6B490-A468-4643-91BD-4C94DF1F8ECB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5C6B490-A468-4643-91BD-4C94DF1F8ECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C6B490-A468-4643-91BD-4C94DF1F8ECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C6B490-A468-4643-91BD-4C94DF1F8ECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C6B490-A468-4643-91BD-4C94DF1F8ECB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC65F68A-23B1-4367-B099-EECD92D1157B}
+	EndGlobalSection
+EndGlobal
