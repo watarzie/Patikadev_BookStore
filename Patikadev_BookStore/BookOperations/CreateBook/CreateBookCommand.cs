@@ -19,7 +19,7 @@ namespace Patikadev_BookStore.BookOperations.CreateBook
             var book = _dbContext.Books.SingleOrDefault(x => x.Title == Model.Title);
             if (book is not null)
             {
-                throw new InvalidOperationException("Kitap zaten mevcut");
+                throw new InvalidOperationException("Kitap sistemde mevcut");
             }
             book = new Book();
             book.Title = Model.Title;
