@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Patikadev_BookStore.BookOperations.CreateBook;
 using Patikadev_BookStore.BookOperations.DeleteBook;
@@ -20,9 +21,11 @@ namespace Patikadev_BookStore.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
-        public BookController(BookStoreDbContext context)
+        private readonly IMapper _mapper;
+        public BookController(BookStoreDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         //private static List<Book> BookList = new List<Book>()
         //{
@@ -54,7 +57,7 @@ namespace Patikadev_BookStore.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksQuery query = new GetBooksQuery(_context);
+            GetBooksQuery query = new GetBooksQuery(_context,_mapper);
             var result=query.Handle();
             return Ok(result);
         }
@@ -64,7 +67,7 @@ namespace Patikadev_BookStore.Controllers
             BookViewIdModel result;
             try
             {
-                GetBookRoute route = new GetBookRoute(_context);
+                GetBookRoute route = new GetBookRoute(_context,_mapper);
                 route.BookId = id;
                 result=route.Handle();
             }
@@ -80,7 +83,7 @@ namespace Patikadev_BookStore.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            CreateBookCommand command = new CreateBookCommand(_context);
+            CreateBookCommand command = new CreateBookCommand(_context,_mapper);
             try
             {
                 

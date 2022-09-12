@@ -1,4 +1,5 @@
-﻿using Patikadev_BookStore.DBOperations;
+﻿using AutoMapper;
+using Patikadev_BookStore.DBOperations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Patikadev_BookStore.BookOperations.CreateBook
     {
         public CreateBookModel Model { get; set; }
         private readonly BookStoreDbContext _dbContext;
-        public CreateBookCommand(BookStoreDbContext dbContext)
+        private readonly IMapper _mapper;
+        public CreateBookCommand(BookStoreDbContext dbContext,IMapper mapper)
         {
             _dbContext = dbContext;
         }
@@ -21,11 +23,12 @@ namespace Patikadev_BookStore.BookOperations.CreateBook
             {
                 throw new InvalidOperationException("Kitap sistemde mevcut");
             }
-            book = new Book();
-            book.Title = Model.Title;
-            book.PublishDate = Model.PublishDate;
-            book.PageCount = Model.PageCount;
-            book.GenreId = Model.GenreId;
+            book = _mapper.Map<Book>(Model); //new Book();
+
+            //book.Title = Model.Title;
+            //book.PublishDate = Model.PublishDate;
+            //book.PageCount = Model.PageCount;
+            //book.GenreId = Model.GenreId;
 
             _dbContext.Books.Add(book);
             _dbContext.SaveChanges();
